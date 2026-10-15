@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stefan Kollet · Terrestrial Hydrology</title>
+<meta name="description" content="Prof. Stefan Kollet, Ph.D. — integrated hydrologic modelling, ParFlow, TSMP and water resources forecasting at Forschungszentrum Jülich (IBG-3).">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f1ea; --surface:#fbfaf6; --ink:#16231f; --muted:#56635e; --line:#d9d4c7;
+  --water:#1f5f6b; --water-2:#3b8a8f; --soil:#8a5a35; --accent-bg:#e4ece9;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1715; --surface:#15201d; --ink:#e7ece8; --muted:#9aa8a2; --line:#2a3833;
+    --water:#7cc4c6; --water-2:#5aa9ad; --soil:#d4a27a; --accent-bg:#1b2b28;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1715; --surface:#15201d; --ink:#e7ece8; --muted:#9aa8a2; --line:#2a3833;
+  --water:#7cc4c6; --water-2:#5aa9ad; --soil:#d4a27a; --accent-bg:#1b2b28;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.6 "IBM Plex Sans",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--water);text-underline-offset:3px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px}
+@media(min-width:720px){.wrap{padding:0 32px}}
+
+/* nav */
+nav{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;gap:16px}
+.mark{font-family:Fraunces,serif;font-weight:600;font-size:1.15rem;color:var(--ink);text-decoration:none}
+nav ul{display:none;list-style:none;margin:0;padding:0;gap:28px;font-size:.92rem}
+nav ul a{color:var(--muted);text-decoration:none}
+nav ul a:hover{color:var(--ink)}
+@media(min-width:720px){nav ul{display:flex}}
+
+/* hero */
+header.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+.hero .wrap{display:grid;gap:40px;padding-top:72px;padding-bottom:0}
+@media(min-width:880px){.hero .wrap{grid-template-columns:1.15fr .85fr;align-items:end;padding-top:110px}}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--water)}
+h1{font-family:Fraunces,serif;font-weight:400;font-size:clamp(2.6rem,7vw,4.6rem);line-height:1.02;margin:14px 0 22px;letter-spacing:-.02em}
+h1 em{font-style:normal;color:var(--water)}
+.lede{font-size:1.15rem;color:var(--muted);max-width:34em;margin:0 0 30px}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:56px}
+.btn{display:inline-block;padding:12px 20px;border-radius:2px;font-weight:500;font-size:.95rem;text-decoration:none;border:1px solid var(--ink)}
+.btn.primary{background:var(--ink);color:var(--bg)}
+.btn.ghost{color:var(--ink)}
+.btn:hover{transform:translateY(-1px)}
+
+/* cross-section illustration */
+.section-art{align-self:end}
+.section-art svg{display:block;width:100%;height:auto}
+.affil{font-size:.88rem;color:var(--muted);border-top:1px solid var(--line);padding:18px 0 22px;display:flex;flex-wrap:wrap;gap:6px 28px}
+.affil strong{color:var(--ink);font-weight:500}
+
+/* sections */
+section{padding:88px 0;border-bottom:1px solid var(--line)}
+h2{font-family:Fraunces,serif;font-weight:400;font-size:clamp(1.9rem,4vw,2.6rem);line-height:1.1;margin:10px 0 24px;letter-spacing:-.01em}
+.intro{display:grid;gap:32px}
+@media(min-width:880px){.intro{grid-template-columns:1fr 1.4fr;gap:64px}}
+.intro p{margin:0 0 1em;max-width:38em}
+
+.themes{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:40px}
+@media(min-width:720px){.themes{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1000px){.themes{grid-template-columns:repeat(4,1fr)}}
+.theme{background:var(--surface);padding:28px 24px}
+.theme .num{font-family:"IBM Plex Mono",monospace;font-size:.78rem;color:var(--soil)}
+.theme h3{font-size:1.05rem;font-weight:600;margin:10px 0 8px}
+.theme p{margin:0;color:var(--muted);font-size:.95rem}
+
+/* software */
+.soft{display:grid;gap:24px}
+@media(min-width:880px){.soft{grid-template-columns:repeat(2,1fr)}}
+.card{background:var(--surface);border:1px solid var(--line);padding:32px;display:flex;flex-direction:column}
+.card .tag{font-family:"IBM Plex Mono",monospace;font-size:.75rem;color:var(--water);letter-spacing:.06em;text-transform:uppercase}
+.card h3{font-family:Fraunces,serif;font-weight:600;font-size:1.7rem;margin:8px 0 12px}
+.card p{color:var(--muted);margin:0 0 20px}
+.card ul{margin:0 0 24px;padding:0;list-style:none;font-size:.93rem}
+.card li{padding:8px 0;border-top:1px solid var(--line)}
+.card .links{margin-top:auto;display:flex;gap:18px;font-size:.93rem;font-weight:500}
+
+/* forecasting band */
+.band{background:var(--accent-bg)}
+.band .grid{display:grid;gap:40px}
+@media(min-width:880px){.band .grid{grid-template-columns:1fr 1fr;gap:64px;align-items:center}}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.stat{background:var(--surface);padding:24px}
+.stat b{display:block;font-family:Fraunces,serif;font-weight:400;font-size:2.2rem;line-height:1;color:var(--water)}
+.stat span{font-size:.88rem;color:var(--muted)}
+
+/* publications */
+.pubs{list-style:none;margin:0;padding:0}
+.pubs li{display:grid;gap:4px 24px;padding:22px 0;border-top:1px solid var(--line)}
+@media(min-width:720px){.pubs li{grid-template-columns:80px 1fr}}
+.pubs .yr{font-family:"IBM Plex Mono",monospace;color:var(--soil);font-size:.9rem}
+.pubs .t{font-weight:500}
+.pubs .m{color:var(--muted);font-size:.92rem}
+
+/* contact */
+.contact{display:grid;gap:32px}
+@media(min-width:880px){.contact{grid-template-columns:1fr 1fr;gap:64px}}
+dl{margin:0;display:grid;grid-template-columns:110px 1fr;gap:14px 16px;font-size:.98rem}
+dt{color:var(--muted);font-family:"IBM Plex Mono",monospace;font-size:.82rem;padding-top:3px}
+dd{margin:0}
+footer{padding:28px 0 40px;font-size:.85rem;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="mark" href="#top">Stefan Kollet</a>
+    <ul>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#software">Software</a></li>
+      <li><a href="#forecasting">Forecasting</a></li>
+      <li><a href="#publications">Publications</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow">Prof. Stefan Kollet, Ph.D. · Terrestrial hydrology</div>
+      <h1>Following water from the <em>atmosphere</em> down to the aquifer.</h1>
+      <p class="lede">I build and apply physics-based, massively parallel models of the terrestrial water cycle — connecting groundwater, soils, land surface and atmosphere — and use them to forecast water availability and extremes.</p>
+      <div class="cta">
+        <a class="btn primary" href="#software">Explore ParFlow &amp; TSMP</a>
+        <a class="btn ghost" href="#contact">Get in touch</a>
+      </div>
+    </div>
+
+    <div class="section-art" aria-hidden="true">
+      <svg viewBox="0 0 440 300" role="img">
+        <!-- sky / rain -->
+        <g stroke="var(--water-2)" stroke-width="1.5" stroke-linecap="round" opacity=".7">
+          <line x1="70" y1="20" x2="62" y2="44"/><line x1="100" y1="12" x2="92" y2="36"/>
+          <line x1="130" y1="26" x2="122" y2="50"/><line x1="160" y1="14" x2="152" y2="38"/>
+          <line x1="190" y1="28" x2="182" y2="52"/>
+        </g>
+        <!-- evapotranspiration arrows -->
+        <g fill="none" stroke="var(--soil)" stroke-width="1.5" stroke-dasharray="3 4">
+          <path d="M320 110 C 315 80, 330 60, 325 30"/>
+          <path d="M350 112 C 345 85, 360 65, 355 38"/>
+        </g>
+        <!-- terrain -->
+        <path d="M0 120 C 80 100, 140 128, 220 118 S 360 96, 440 104 L440 300 L0 300Z" fill="var(--accent-bg)"/>
+        <!-- soil layers -->
+        <path d="M0 150 C 90 136, 160 156, 230 148 S 370 130, 440 138" fill="none" stroke="var(--line)" stroke-width="1.2"/>
+        <path d="M0 190 C 100 180, 170 196, 240 190 S 370 176, 440 182" fill="none" stroke="var(--line)" stroke-width="1.2"/>
+        <!-- water table -->
+        <path d="M0 214 C 100 206, 180 220, 250 214 S 380 202, 440 208" fill="none" stroke="var(--water)" stroke-width="2"/>
+        <path d="M0 214 C 100 206, 180 220, 250 214 S 380 202, 440 208 L440 300 L0 300Z" fill="var(--water)" opacity=".14"/>
+        <!-- river channel -->
+        <path d="M205 119 q 15 10 30 0" fill="var(--water)" opacity=".7"/>
+        <!-- groundwater flow arrows -->
+        <g stroke="var(--water)" stroke-width="1.5" fill="none" marker-end="url(#a)">
+          <path d="M60 250 C 120 246, 170 240, 210 226"/>
+          <path d="M390 248 C 330 244, 280 238, 238 226"/>
+        </g>
+        <defs><marker id="a" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L8 4 L0 8z" fill="var(--water)"/></marker></defs>
+        <!-- labels -->
+        <g font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--muted)">
+          <text x="210" y="40">precipitation</text>
+          <text x="364" y="60">ET</text>
+          <text x="12" y="172">vadose zone</text>
+          <text x="12" y="236">groundwater</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="affil">
+      <span><strong>Institute of Bio- and Geosciences, Agrosphere (IBG-3)</strong>, Forschungszentrum Jülich</span>
+      <span>University of Bonn, Institute for Geosciences</span>
+    </div>
+  </div>
+</header>
+
+<section id="research">
+  <div class="wrap">
+    <div class="intro">
+      <div>
+        <div class="eyebrow">Research</div>
+        <h2>The terrestrial system as one connected water and energy cycle.</h2>
+      </div>
+      <div>
+        <p>Groundwater, soil moisture, rivers, vegetation and the atmosphere are usually studied apart. My work treats them as one coupled system: lateral groundwater flow shapes soil moisture, which shapes evapotranspiration, which feeds back on the boundary layer and precipitation.</p>
+        <p>To capture these feedbacks at the scales where they matter, we develop open-source simulation platforms that run from a laptop to the largest supercomputers and, increasingly, on GPUs.</p>
+      </div>
+    </div>
+
+    <div class="themes">
+      <div class="theme"><div class="num">01</div><h3>Integrated hydrologic modelling</h3><p>Coupled surface–subsurface flow with variably saturated groundwater and dynamic overland flow.</p></div>
+      <div class="theme"><div class="num">02</div><h3>Groundwater–land surface feedbacks</h3><p>How water table dynamics control energy fluxes, evapotranspiration and land–atmosphere coupling.</p></div>
+      <div class="theme"><div class="num">03</div><h3>High-performance &amp; GPU computing</h3><p>Massively parallel Earth system simulation at continental scale and high resolution.</p></div>
+      <div class="theme"><div class="num">04</div><h3>Prediction &amp; water resources</h3><p>Ensemble forecasts of water availability, droughts and floods for stakeholders.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="software">
+  <div class="wrap">
+    <div class="eyebrow">Open-source software</div>
+    <h2>Tools the community builds on.</h2>
+    <div class="soft">
+      <article class="card">
+        <div class="tag">Integrated hydrologic model</div>
+        <h3>ParFlow</h3>
+        <p>A parallel, integrated hydrology model simulating spatially distributed surface and subsurface flow together with land surface processes such as evapotranspiration and snow. I am one of its core developers.</p>
+        <ul>
+          <li>Richards’ equation implicitly coupled to shallow-water overland flow</li>
+          <li>Terrain-following grid from the land surface to deep aquifers</li>
+          <li>Scales to very large core counts and runs on GPUs</li>
+        </ul>
+        <div class="links"><a href="https://github.com/parflow/parflow">GitHub →</a><a href="https://helmholtz.software/software/parflow">Helmholtz RSD →</a></div>
+      </article>
+      <article class="card">
+        <div class="tag">Regional Earth system model</div>
+        <h3>TSMP</h3>
+        <p>The Terrestrial Systems Modelling Platform couples atmosphere, land surface and subsurface into one scale-consistent, modular, massively parallel regional Earth system model.</p>
+        <ul>
+          <li>Mass, energy and momentum exchange across compartments</li>
+          <li>From catchment to continental domains</li>
+          <li>Built around ParFlow, a land surface model and an atmospheric model</li>
+        </ul>
+        <div class="links"><a href="https://helmholtz.software/software/tsmp">Helmholtz RSD →</a></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="forecasting" class="band">
+  <div class="wrap grid">
+    <div>
+      <div class="eyebrow">From research to decisions</div>
+      <h2>Water resources forecasts for central Europe.</h2>
+      <p>Since 2020, ParFlow with its integrated land surface model has run in an experimental, quasi-operational setup over central Europe on GPUs. Ensemble forecasts driven by ECMWF predictions feed an experimental Water Resources Bulletin that maps subsurface water storage anomalies — including shallow groundwater — against a long-term model climatology.</p>
+      <p>The same system was used to analyse forecasts and hindcasts of the July 2021 flood in western Germany and eastern Belgium.</p>
+      <p><a href="https://www.adapter-projekt.de/bulletin/index_en.html">View the Water Resources Bulletin →</a></p>
+    </div>
+    <div class="stats">
+      <div class="stat"><b>~600 m</b><span>spatial resolution</span></div>
+      <div class="stat"><b>52</b><span>ensemble members</span></div>
+      <div class="stat"><b>10 days</b><span>daily forecast horizon</span></div>
+      <div class="stat"><b>60 m</b><span>groundwater depth in the bulletin</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="publications">
+  <div class="wrap">
+    <div class="eyebrow">Selected publications</div>
+    <h2>Key papers.</h2>
+    <ul class="pubs">
+      <li><span class="yr">2008</span><div><div class="t">Capturing the influence of groundwater dynamics on land surface processes using an integrated, distributed watershed model</div><div class="m">Kollet, S. J. &amp; Maxwell, R. M. · Water Resources Research 44 · <a href="https://doi.org/10.1029/2007WR006004">doi:10.1029/2007WR006004</a></div></div></li>
+      <li><span class="yr">2006</span><div><div class="t">Integrated surface–groundwater flow modeling: A free-surface overland flow boundary condition in a parallel groundwater flow model</div><div class="m">Kollet, S. J. &amp; Maxwell, R. M. · Advances in Water Resources 29, 945–958 · <a href="https://doi.org/10.1016/j.advwatres.2005.08.006">doi:10.1016/j.advwatres.2005.08.006</a></div></div></li>
+    </ul>
+    <p style="margin-top:28px"><a href="https://orcid.org/0000-0003-0095-1554">Full publication list on ORCID →</a></p>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap contact">
+    <div>
+      <div class="eyebrow">Contact</div>
+      <h2>Collaborations, students and data requests welcome.</h2>
+    </div>
+    <dl>
+      <dt>Email</dt><dd><a href="mailto:s.kollet@fz-juelich.de">s.kollet@fz-juelich.de</a></dd>
+      <dt>Institute</dt><dd>IBG-3 Agrosphere<br>Forschungszentrum Jülich GmbH<br>52425 Jülich, Germany</dd>
+      <dt>ORCID</dt><dd><a href="https://orcid.org/0000-0003-0095-1554">0000-0003-0095-1554</a></dd>
+      <dt>Code</dt><dd><a href="https://github.com/parflow">github.com/parflow</a></dd>
+    </dl>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">© Stefan Kollet · Forschungszentrum Jülich, IBG-3</div>
+</footer>
+
+</body>
+</html>
